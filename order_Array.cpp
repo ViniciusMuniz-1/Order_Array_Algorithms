@@ -80,32 +80,48 @@ void orderByInsertion(int array[], int sizeArray){
 
 
 //-------------------------------------------------------------------
-//Function Name: orderByMergeSort;
-//Parameters: int array[] -> an array; int sizeArray -> the size of the array being received;
-//Complexity: ;
-void orderByMergeSort(int array[], int sizeArray){
-    
+//Function Name: merge;
+//Parameters: int array[] -> an array; int firstElem -> the first element of the array; int lastElem -> the last element of the array;
+//Complexity: O(n);
+void merge(int array[], int firstIndex, int mid1, int mid2, int lastIndex) {
+    int size1 = (mid1 - firstIndex) + 1;
+    int size2 = (lastIndex - mid2) + 1;
+    int* temp = new int[size1 + size2];
+    int i = firstIndex;
+    int j = mid2;
+    int k = 0;
+
+    while (i <= mid1 && j <= lastIndex) {
+        if (array[i] < array[j])
+            temp[k++] = array[i++];
+        else
+            temp[k++] = array[j++];
+    }
+
+    while (i <= mid1)
+        temp[k++] = array[i++];
+    while (j <= lastIndex)
+        temp[k++] = array[j++];
+
+    for (i = 0, j = firstIndex; i < size1 + size2; i++, j++)
+        array[j] = temp[i];
+
+    delete[] temp;
 }
 //-------------------------------------------------------------------
 
 
-int main(){
-    int isOrdered = 0;
-    int decision = 1;
-
-    while(decision != 0){
-    int sizeArray;
-    cin >> sizeArray;
-    int array[sizeArray];
-        for(int i = 0; i < sizeArray; ++i){
-            cin >> array[i];
-        }
-        isOrdered = isOrder(array, sizeArray);
-        if(isOrdered == 0){
-            orderByInsertion(array, sizeArray);
-            isOrdered = isOrder(array, sizeArray);
-            printArray(array, sizeArray);
-        }
-        cout << isOrdered << endl;
+//-------------------------------------------------------------------
+//Function Name: orderByMergeSort;
+//Parameters: int array[] -> an array; int firstIndex -> the first index of the array; int lastIndex -> the last index of the array;
+//Complexity: O(n log n);
+void orderByMergeSort(int array[], int firstIndex, int lastIndex){
+    int mid;
+    if(firstIndex<lastIndex) {
+        mid=(firstIndex+lastIndex)/2;
+        orderByMergeSort(array, firstIndex, mid);
+        orderByMergeSort(array, mid+1, lastIndex);
+        merge(array, firstIndex, mid, mid+1, lastIndex);
     }
 }
+//-------------------------------------------------------------------

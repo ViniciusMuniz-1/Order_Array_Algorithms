@@ -29,6 +29,11 @@ void orderByInsertion(int array[], int sizeArray);
   usando o método merge sort.
   A ordenação é feita diretamente no vetor 'a'
 */
-void orderByMergeSort(int array[], int sizeArray);
+void orderByMergeSort(int array[], int firstIndex, int lastIndex);
+
+/*
+  Função que imprime o vetor 'a';
+*/
+void printArray(int array[], int sizeArray);
 
 #endif
